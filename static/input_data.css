@@ -8,7 +8,11 @@ body {
     align-items: center;
     height: 100vh;
 }
-
+.account_name {
+    text-align: center; /* Center the text */
+    color: rgb(0, 0, 0); /* Set the color to white */
+    margin-top: 5px; /* Add margin to separate from the top */
+}
 .data-card {
     background-color: #fff;
     border-radius: 15px;
