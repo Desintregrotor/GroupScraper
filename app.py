@@ -8,7 +8,7 @@ import json
 from flask import session
 from flask import Flask, request, redirect, render_template, flash, jsonify
 app = Flask(__name__)
-
+app.secret_key = 'this_is_very_secret_key_01011508719'
 def convert_member_count( member_count_str):
     if 'K' in member_count_str:
         return int(float(member_count_str.replace("K members",'')) * 1000)
@@ -266,5 +266,4 @@ def join_group():
             return jsonify({'message': 'Already Member'})
     return jsonify({'error': 'Failed to join the group'})
 if __name__ == '__main__':
-    app.secret_key = 'Refoo01011508719###'  # Set a secret key for session management
     app.run(debug=True)
