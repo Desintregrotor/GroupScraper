@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="{{ url_for('static', filename='input_data.css') }}">
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@200..1000&display=swap" rel="stylesheet">
+    <title>Input Data</title>
+</head>
+<body>
+    <div class="data-card">
+        <form action="/scrape_groups" method="POST">
+            <label for="count">عدد المجموعات</label>
+            <input type="number" id="count" name="count" min="1" required><br>
+
+            <label for="keyword">الكلمة المفتاحية</label>
+            <input type="text" id="keyword" name="keyword" required><br>
+
+            <label for="min_member_count">الحد الادني لعدد الاعضاء</label>
+            <input type="number" id="min_member_count" name="min_member_count" min="1" required><br>
+
+            <label for="min_posts_count">الحد الادني لعدد المنشورات اليومية</label>
+            <input type="number" id="min_posts_count" name="min_posts_count" min="1" max="10" required><br>
+
+            <div class="group_status">
+                <input type="radio" id="public" name="group_status" value="public" checked>
+                <label for="public">عامة</label>
+                
+                <input type="radio" id="private" name="group_status" value="private">
+                <label for="private">خاصة</label>
+                
+                <input type="radio" id="both" name="group_status" value="both">
+                <label for="both">عامة وخاصة</label>
+            </div>
+            <br>
+
+            <input type="submit" value="البحث عن مجموعات">
+        </form>   
+    </div>
+    <div class="loading-overlay" id="loadingOverlay">
+        <div class="loading-spinner"></div>
+    </div>
+    <script>
+        document.querySelector("form").addEventListener("submit", function() {
+            document.getElementById("loadingOverlay").style.display = "flex";
+        });
+
+        // Hide spinner when the page is fully loaded or shown
+        function hideSpinner() {
+            document.getElementById("loadingOverlay").style.display = "none";
+        }
+
+        document.addEventListener("DOMContentLoaded", hideSpinner);
+        window.addEventListener("pageshow", function(event) {
+            // Ensure spinner is hidden only for new page loads, not when navigating back
+            if (event.persisted) {
+                hideSpinner();
+            }
+        });
+    </script>
+</body>
+</html>

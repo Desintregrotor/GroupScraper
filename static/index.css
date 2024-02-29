@@ -1,0 +1,98 @@
+body {
+    font-family: 'Cairo', sans-serif;
+    background: linear-gradient(270deg, rgba(34,193,195,1) 0%, rgba(132,45,253,1) 100%);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    margin: 0;
+}
+
+.login-card {
+    background-color: #fff;
+    border-radius: 15px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    padding: 20px;
+    width: 300px;
+    height: 400px;
+}
+
+.input-group {
+    margin-bottom: 15px;
+}
+
+label {
+    display: block;
+    margin-bottom: 5px;
+}
+
+input[type="email"],
+input[type="password"],
+input[type="submit"] {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #939393;
+    border-radius: 5px;
+    box-sizing: border-box;
+    font-size: 15px;
+    font-family: 'Cairo', sans-serif;
+    transition: border-color 0.3s, box-shadow 0.3s;
+    outline: none;
+}
+
+input[type="email"]:focus,
+input[type="password"]:focus {
+    border-color: #0866ff;
+    box-shadow: 0 0 5px rgba(0, 0, 0, 0.1);
+}
+
+input[type="submit"] {
+    width: 100%;
+    background-color: #0866ff; /* Accent color */
+    color: white;
+    padding: 14px 20px;
+    margin: 8px 0;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 16px;
+    font-weight: bold;
+    font-family: 'Cairo', sans-serif;
+}
+
+input[type="submit"]:hover {
+    background-color: #448cff;
+}
+
+.facebook-logo {
+    font-size: 40px;
+    border-radius: 50%;
+    background-color: #0866ff;
+    color: #fff;
+    width: 60px;
+    height: 60px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 20px auto;
+    pointer-events: none;
+}
+.flash-messages {
+    list-style-type: none;
+    padding: 10px;
+    margin-top: 10px;
+    background-color: #f44336; /* Red background color */
+    color: white; /* White text color */
+    border-radius: 10px; /* Rounded corners */
+    opacity: 1; /* Initially visible */
+    transition: opacity 1s ease-in-out; /* Fade out transition */
+    position: absolute; /* Position absolute */
+    top: 0; /* Align to the top */
+    left: 50%; /* Center horizontally */
+    transform: translateX(-50%); /* Center horizontally */
+    z-index: 999; /* Ensure it's above other elements */
+}
+
+.flash-messages li {
+    margin-bottom: 5px;
+}

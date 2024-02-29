@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="en" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="{{ url_for('static', filename='preview_groups.css') }}">
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@200..1000&display=swap" rel="stylesheet">
+    <title>Preview Data</title>
+</head>
+<body>
+    <h1>نتائج البحث</h1>
+    <table id="data-table"> <!-- Add the ID attribute -->
+        <thead>
+            <tr>
+                <th data-sort="id">المعرف</th>
+                <th data-sort="name">اسم المجموعه</th>
+                <th data-sort="privacy">الخصوصيه</th>
+                <th data-sort="member_count">عدد الاعضاء</th>
+                <th data-sort="number_of_posts">عدد المنشورات</th>
+                <th>رابط المجموعه</th>
+                <th>أنضمام</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for group in groups %}
+            <tr>
+                <td>{{ group.id }}</td>
+                <td>{{ group.name }}</td>
+                <td>{{ group.privacy_status }}</td>
+                <td>{{ group.member_count }}</td>
+                <td>{{ group.number_of_posts }}</td>
+                <td><a class="group-link" href="{{ group.url }}" target="_blank">{{ group.url }}</a></td>
+                <td><button class="join-button" onclick="joinGroup('{{ group.url }}', this)">انضمام</button></td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+    <button class="download" onclick="exportToExcel()">تحميل</button>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.17.3/xlsx.full.min.js"></script>
+
+    <script>
+        function exportToExcel() {
+            const table = document.getElementById('data-table');
+            const sheet = XLSX.utils.table_to_sheet(table);
+            const workbook = XLSX.utils.book_new();
+            XLSX.utils.book_append_sheet(workbook, sheet, 'Sheet1');
+            XLSX.writeFile(workbook, 'data.xlsx');
+        }
+
+        function sortTable(columnIndex) {
+            const table = document.getElementById('data-table');
+            const tbody = table.querySelector('tbody');
+            const rows = Array.from(tbody.querySelectorAll('tr'));
+
+            rows.sort((a, b) => {
+                const aValue = a.cells[columnIndex].textContent.trim();
+                const bValue = b.cells[columnIndex].textContent.trim();
+                return aValue.localeCompare(bValue, 'ar', { sensitivity: 'base' });
+            });
+
+            tbody.innerHTML = '';
+            rows.forEach(row => tbody.appendChild(row));
+        }
+
+        document.querySelectorAll('th[data-sort]').forEach(th => {
+            th.addEventListener('click', () => {
+                const columnIndex = th.cellIndex;
+                sortTable(columnIndex);
+            });
+        });
+
+        function joinGroup(groupUrl, buttonElement) {
+            // Store the original button text to restore it later
+            const originalText = buttonElement.innerText;
+
+            // Set the button text to indicate loading
+            buttonElement.innerText = 'جاري الانضمام...';
+
+            const xhr = new XMLHttpRequest();
+            xhr.open('POST', '/join_group', true);
+            xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
+            xhr.onreadystatechange = function () {
+                if (xhr.readyState === 4) {
+                    if (xhr.status === 200) {
+                        const response = JSON.parse(xhr.responseText);
+                        alert(response.message); // Show success message
+                        // Update button text and disable the button
+                        buttonElement.innerText = 'تم الانضمام';
+                        buttonElement.disabled = true;
+                    } else {
+                        alert('Failed to join the group'); // Show error message
+                        // Restore the original button text
+                        buttonElement.innerText = originalText;
+                    }
+                }
+            };
+            xhr.send(`group_url=${encodeURIComponent(groupUrl)}`);
+        }
+    </script>
+</body>
+</html>

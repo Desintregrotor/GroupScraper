@@ -1,0 +1,75 @@
+body {
+    font-family: 'Cairo', sans-serif;
+    background: linear-gradient(270deg, rgba(34,193,195,1) 0%, rgba(132,45,253,1) 100%);
+    margin: 0;
+    padding: 20px;
+}
+
+h1 {
+    text-align: center;
+    color: #fff;
+}
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 20px;
+    color: white;
+}
+
+th, td {
+    border: 1px solid #ddd;
+    padding: 8px;
+    text-align: right;
+}
+
+th {
+    background-color: #0866ff;
+    color: white;
+}
+
+
+a {
+    color: #0866ff;
+    text-decoration: none;
+}
+
+a:hover {
+    text-decoration: underline;
+}
+button.download {
+    background-color: #0656d9;
+    margin: 10px;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    padding: 10px 20px;
+    cursor: pointer;
+    font-size: 16px;
+    font-family: "Cairo" sans-serif;
+    font-weight: bold;
+}
+
+button.download:hover {
+    background-color: #044baf;
+}
+a.group-link {
+    color: white;
+    text-decoration: none;
+}
+button.join-button {
+    background-color: #0656d9;
+    margin: 10px;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    padding: 10px 20px;
+    cursor: pointer;
+    font-size: 16px;
+    font-family: "Cairo" sans-serif;
+    font-weight: bold;
+}
+
+button.join-button:hover {
+    background-color: #044baf;
+}

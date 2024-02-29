@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en" dir=rtl>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="{{ url_for('static', filename='index.css') }}">
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@200..1000&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+    <title>Login</title>
+</head>
+<body>
+    {% with messages = get_flashed_messages(with_categories=true) %}
+        {% if messages %}
+            <ul class="flash-messages">
+                {% for category, message in messages %}
+                    <li class="{{ category }}">{{ message }}</li>
+                {% endfor %}
+            </ul>
+        {% endif %}
+    {% endwith %}
+    <div class="login-card">
+        <div class="facebook-logo">
+            <i class="fab fa-facebook-f"></i>
+        </div>
+        <form action="/login" method="POST">
+            <div class="input-group">
+                <label for="email">الأيميل او رقم الهاتف</label>
+                <input type="email" id="email" name="email" required>
+            </div>
+            <div class="input-group">
+                <label for="password">كلمة المرور</label>
+                <input type="password" id="password" name="password" required>
+            </div>
+            <br>
+            <div class="input-group">
+                <input type="submit" value="تسجيل الدخول">
+            </div>
+        </form>
+    </div>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            var flashMessages = document.querySelectorAll('.flash-messages');
+            flashMessages.forEach(function(element) {
+                setTimeout(function() {
+                    element.style.opacity = 0;
+                }, 2000); // Fade out after 5 seconds
+            });
+        });
+        
+    </script>
+</body>
+</html>
